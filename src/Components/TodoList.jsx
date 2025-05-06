@@ -59,7 +59,7 @@ export default function TodoList() {
   useEffect(() => {
     const storedTodos = JSON.parse(localStorage.getItem("todos"));
     setTodos(storedTodos || []);
-  }, []);
+  }, [setTodos]);
 
   return (
     <Container maxWidth="md">
