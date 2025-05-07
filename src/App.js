@@ -4,7 +4,7 @@ import TodoList from "./Components/TodoList";
 import { v4 as uuidv4 } from "uuid";
 import { TodoContext } from "./Contexts/TodoContext";
 import { useState } from "react";
-
+import { SnackbarProvider } from "./Contexts/SnackbarContext";
 const theme = createTheme({
   typography: {
     fontFamily: ["Alexandria"],
@@ -41,11 +41,13 @@ function App() {
   const [todos, setTodos] = useState(initalTodos);
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
-        <TodoContext.Provider value={{ todos, setTodos }}>
-          <TodoList />
-        </TodoContext.Provider>
-      </div>
+      <SnackbarProvider>
+        <div className="App">
+          <TodoContext.Provider value={{ todos, setTodos }}>
+            <TodoList />
+          </TodoContext.Provider>
+        </div>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }
