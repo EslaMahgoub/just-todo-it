@@ -1,16 +1,15 @@
-import { useContext } from "react";
 import { Box, Grid, IconButton, Typography } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import ModeEditRoundedIcon from "@mui/icons-material/ModeEditRounded";
-import { TodoContext } from "../Contexts/TodoContext";
+import { useTodosDispatch } from "../Contexts/TodoContext";
 import { useToast } from "../Contexts/SnackbarContext";
 export default function TodoTask({
   todo,
   handleDeleteDialogShow,
   handleUpdateDialogShow,
 }) {
-  const { todos, setTodos } = useContext(TodoContext);
+  const dispatch = useTodosDispatch();
   const { showHideSnackbar } = useToast();
 
   //   Event Handlers
@@ -23,14 +22,7 @@ export default function TodoTask({
   }
 
   function handleCheckClick() {
-    const updatedTodos = todos.map((t) => {
-      if (t.id === todo.id) {
-        t.isCompleted = !t.isCompleted;
-      }
-      return t;
-    });
-    setTodos(updatedTodos);
-    localStorage.setItem("todos", JSON.stringify(updatedTodos));
+    dispatch({ type: "toggledCompleted", payload: { todo: todo } });
     showHideSnackbar("Task Updated Successfully");
   }
 

@@ -1,10 +1,9 @@
 import { createTheme, ThemeProvider } from "@mui/material";
 import "./App.css";
 import TodoList from "./Components/TodoList";
-import { v4 as uuidv4 } from "uuid";
-import { TodoContext } from "./Contexts/TodoContext";
-import { useState } from "react";
+import TodosProvider from "./Contexts/TodoContext";
 import { SnackbarProvider } from "./Contexts/SnackbarContext";
+
 const theme = createTheme({
   typography: {
     fontFamily: ["Alexandria"],
@@ -16,38 +15,16 @@ const theme = createTheme({
   },
 });
 
-const initalTodos = [
-  {
-    id: uuidv4(),
-    title: "Finish React Course",
-    description: "Finish Tarmeez React course ",
-    isCompleted: false,
-  },
-  {
-    id: uuidv4(),
-    title: "البدء في مشروع الريأكت",
-    description: " البدء في مشروع كامل",
-    isCompleted: false,
-  },
-  {
-    id: uuidv4(),
-    title: "الانتهاء من كورس البولندي",
-    description: " الانتهاء من كورس البولندي الكتاب",
-    isCompleted: false,
-  },
-];
-
 function App() {
-  const [todos, setTodos] = useState(initalTodos);
   return (
     <ThemeProvider theme={theme}>
-      <SnackbarProvider>
-        <div className="App">
-          <TodoContext.Provider value={{ todos, setTodos }}>
+      <TodosProvider>
+        <SnackbarProvider>
+          <div className="App">
             <TodoList />
-          </TodoContext.Provider>
-        </div>
-      </SnackbarProvider>
+          </div>
+        </SnackbarProvider>
+      </TodosProvider>
     </ThemeProvider>
   );
 }
